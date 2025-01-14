@@ -6,7 +6,7 @@ namespace Record_Shop.Service
     {
         public List<Album> RetrieveAlbums();
     }
-    public class RecordShopService
+    public class RecordShopService : IRecordShopService
     {
         private readonly IRecordShopModel _recordShopModel;
 

@@ -2,9 +2,8 @@
 {
     public class Song
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        //public List<Artist> Artists { get; set; }
-        public int Length { get; set; }
+        public int id { get; set; }
+        public string title { get; set; }
+        public int length { get; set; }
     }
 }

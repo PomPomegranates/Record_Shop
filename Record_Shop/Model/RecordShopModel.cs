@@ -8,27 +8,31 @@ namespace Record_Shop.Model
     }
     public class RecordShopModel : IRecordShopModel
     {
+        private RecordShopDbContext db { get; set; }
+        public RecordShopModel(RecordShopDbContext context)
+        {
+            db = context;
+        }
         private void MakeDatabase()
         {
-            using (var db = new RecordShopDbContext())
-            {
-                db.Database.EnsureCreated();
+
+            db.Database.EnsureCreated();
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true,
                 };
 
                 db.Albums.UpdateRange(JsonSerializer.Deserialize<List<Album>>(File.ReadAllText("Albums.json"), options)!);
-            }
+                db.SaveChanges();
+            
         }
 
         public List<Album> GetAlbums()
         {
             MakeDatabase();
-            using (var db = new RecordShopDbContext())
-            {
+
                 return db.Albums.ToList();
-            }
+            
         } 
     }
 }
