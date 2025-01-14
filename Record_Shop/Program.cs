@@ -1,4 +1,8 @@
 
+using Microsoft.EntityFrameworkCore;
+using Record_Shop.Service;
+using Record_Shop.Model;
+
 namespace Record_Shop
 {
     public class Program
@@ -6,7 +10,9 @@ namespace Record_Shop
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddDbContext<RecordShopDbContext>();
+            builder.Services.AddScoped<IRecordShopService, RecordShopService>();
+            builder.Services.AddScoped<IRecordShopModel, RecordShopModel>();
             // Add services to the container.
 
             builder.Services.AddControllers();

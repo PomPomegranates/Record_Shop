@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public List<Artist> Artists { get; set; }
+        public Artist Artist { get; set; }
         public List<Song> Songs { get; set; }
 
     }

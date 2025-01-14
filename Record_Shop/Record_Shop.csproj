@@ -19,8 +19,5 @@
 			<_Parameter1>RecordShopTests</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Controllers\" />
-	</ItemGroup>
 
 </Project>

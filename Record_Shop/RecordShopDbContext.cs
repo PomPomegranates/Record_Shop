@@ -7,7 +7,7 @@ namespace Record_Shop
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseInMemoryDatabase(databaseName: "RecordShopMemory");
-            optionsBuilder.UseSqlServer()
+            //optionsBuilder.UseSqlServer()
         }
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Album> Albums { get; set; }

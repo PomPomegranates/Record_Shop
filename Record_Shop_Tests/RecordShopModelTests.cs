@@ -12,7 +12,7 @@ namespace Record_Shop_Tests
         {
             _connection = new SqliteConnection("Filename=:memory:");
             _connection.Open();
-            var _contextOptions = new DbContextOptionsBuilder<BloggingContext>()
+            var _contextOptions = new DbContextOptionsBuilder<RecordShopDbContext>()
             .UseSqlite(_connection)
             .Options;
 
