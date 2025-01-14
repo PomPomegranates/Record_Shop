@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Record_Shop", "Record_Shop\Record_Shop.csproj", "{314201E2-4D97-44B8-9659-A3F0AFFCAF41}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Record_Shop_Tests", "Record_Shop_Tests\Record_Shop_Tests.csproj", "{C093AD68-3EFE-4903-B7B9-5CBF9C393E0A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{314201E2-4D97-44B8-9659-A3F0AFFCAF41} = {314201E2-4D97-44B8-9659-A3F0AFFCAF41}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
