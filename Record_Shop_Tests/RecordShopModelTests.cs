@@ -5,17 +5,19 @@ namespace Record_Shop_Tests
 {
     public class RecordShopModelTests
     {
-        private SqliteConnection _connection;
+        //private SqliteConnection _connection;
+        //_connection = new SqliteConnection("Filename=:memory:");
+        //_connection.Open();
+        //    var _contextOptions = new DbContextOptionsBuilder<RecordShopDbContext>()
+        //    .UseSqlite(_connection)
+        //    .Options;
+        //      _connection.Dispose();
+
 
         [SetUp]
         public void Setup()
         {
-            _connection = new SqliteConnection("Filename=:memory:");
-            _connection.Open();
-            var _contextOptions = new DbContextOptionsBuilder<RecordShopDbContext>()
-            .UseSqlite(_connection)
-            .Options;
-
+          
         }
 
         [Test]
@@ -27,7 +29,7 @@ namespace Record_Shop_Tests
         [TearDown]
         public void Cleanup()
         {
-            _connection.Dispose();
+            
         }
     }
 }

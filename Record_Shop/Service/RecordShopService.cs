@@ -1,10 +1,12 @@
-﻿using Record_Shop.Model;
+﻿using Microsoft.AspNetCore.Mvc;
+using Record_Shop.Model;
+using System.Net;
 
 namespace Record_Shop.Service
 {
     public interface IRecordShopService 
     {
-        public List<Album> RetrieveAlbums();
+        public (HttpStatusCode, List<Album>) ConfirmAlbums();
     }
     public class RecordShopService : IRecordShopService
     {
@@ -14,9 +16,14 @@ namespace Record_Shop.Service
         {
             _recordShopModel = recordShopModel;
         }
-        public List<Album> RetrieveAlbums()
+        public (HttpStatusCode, List<Album>) ConfirmAlbums()
         {
-            return _recordShopModel.GetAlbums();
+            var albums = _recordShopModel.RetrieveAlbums();
+            if (albums.Count == 0)
+            {
+                return (HttpStatusCode.NoContent, albums);
+            }
+            return (HttpStatusCode.OK, albums);
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Record_Shop.Model
 {
     public interface IRecordShopModel
     {
-        public List<Album> GetAlbums();
+        public List<Album> RetrieveAlbums();
     }
     public class RecordShopModel : IRecordShopModel
     {
@@ -27,7 +27,7 @@ namespace Record_Shop.Model
             
         }
 
-        public List<Album> GetAlbums()
+        public List<Album> RetrieveAlbums()
         {
             MakeDatabase();
 
