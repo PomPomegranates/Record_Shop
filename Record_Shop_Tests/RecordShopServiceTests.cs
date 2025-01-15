@@ -24,8 +24,9 @@ public class RecordShopServiceTests
         _mockModel = new Mock<IRecordShopModel>();
         _recordShopService = new RecordShopService(_mockModel.Object);
         Album testAlbum = new Album();
-        testAlbum.Artist = "Test";
-        albumList.Add(testAlbum);
+        testAlbum.Artist = new Artist();
+        testAlbum.Artist.Name = "TEST";
+            albumList.Add(testAlbum);
         
     }
 

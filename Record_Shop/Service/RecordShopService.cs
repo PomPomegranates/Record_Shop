@@ -84,8 +84,6 @@ namespace Record_Shop.Service
         {
             if (ConfirmIndividualAlbumById(id).Item2 == null) return (HttpStatusCode.NotFound, $"No Item exists for Album ID:{id}");
             else return (HttpStatusCode.Accepted, _recordShopModel.ModifyAlbum(int.Parse(id), album));
-            
-
 
         }
     }

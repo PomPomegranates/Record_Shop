@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Record_Shop.Model
 {
@@ -17,19 +18,30 @@ namespace Record_Shop.Model
         {
             db = context;
         }
+        public static bool DbCreated = false;
         private void CheckDatabase()
         {
 
-            db.Database.EnsureCreated();
+            
             
             if (db.Albums == null || db.Albums.ToList().Count == 0)
+
             {
+                db.Database.EnsureCreated();
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true,
+                    ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                    WriteIndented = true
                 };
                 var list = JsonSerializer.Deserialize<List<Album>>(File.ReadAllText("Albums.json"), options)!;
                 db.Albums.UpdateRange(list);
+                foreach (Album album in db.Albums)
+                {
+                    db.Artists.AddRange(album.Artist);
+                    db.Songs.AddRange(album.Songs);
+                    db.SaveChanges();
+                }
                 db.SaveChanges();
                 //try
                 //{
@@ -38,7 +50,7 @@ namespace Record_Shop.Model
                 //{
                 //    return;
                 //}
-                
+                DbCreated = true;
             }
                 
             
@@ -46,7 +58,7 @@ namespace Record_Shop.Model
 
         public List<Album> RetrieveAlbums()
         {
-            CheckDatabase();
+            if (!DbCreated) CheckDatabase();
             var list = db.Albums.ToList();
             return list;
             
@@ -54,12 +66,12 @@ namespace Record_Shop.Model
 
         public Album? RetrieveAlbum(int id)
         {
-            CheckDatabase();
+            if (!DbCreated) CheckDatabase();
             //return db.Albums.FirstOrDefault(x => x.Id == id, null);
             var query = db.Albums.Where(x => x.Id == id);
             if (!query.IsNullOrEmpty())
             {
-                return query.First();
+                return query.SingleOrDefault();
             }
             else
             {
@@ -71,14 +83,14 @@ namespace Record_Shop.Model
 
         public void AddAlbum(Album album)
         {
-            CheckDatabase();
+            if (!DbCreated) CheckDatabase();
             db.Albums.Add(album);
             db.SaveChanges();
         }
 
         public Album ModifyAlbum(int id, Album album)
         {
-            CheckDatabase();
+            if (!DbCreated) CheckDatabase();
             var changeableAlbum = RetrieveAlbum(id)!;
             
            
@@ -86,7 +98,7 @@ namespace Record_Shop.Model
                 {
                     changeableAlbum.Title = album.Title;
                 }
-                if (!album.Artist.IsNullOrEmpty())
+                if (!album.Artist.Name.IsNullOrEmpty())
                 {
                     changeableAlbum.Artist = album.Artist;
                 }
