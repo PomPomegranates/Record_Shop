@@ -22,7 +22,7 @@ namespace Record_Shop.Controllers
             switch (tupledResult.Item1)
             {
                 case (HttpStatusCode.OK):
-                    return Ok(_recordShopService.ConfirmAlbums());
+                    return Ok(_recordShopService.ConfirmAlbums().Item2);
                 case (HttpStatusCode.NoContent):
                     return NoContent();
                 default:
@@ -30,12 +30,35 @@ namespace Record_Shop.Controllers
             }
 
         }
-        [HttpGet("{id}")]
-        public IActionResult GetAlbumById(id)
+        [HttpGet("idSearch/{id}")]
+        public IActionResult GetAlbumById(string id)
         {
-
+            var tupledResult = _recordShopService.ConfirmIndividualAlbumById(id);
+            switch (tupledResult.Item1)
+            {
+                case (HttpStatusCode.OK):
+                    return Ok(tupledResult.Item2);
+                case (HttpStatusCode.NoContent):
+                    return NoContent();
+                case (HttpStatusCode.BadRequest):
+                    return BadRequest();
+                default:
+                    return NotFound();
+            }
         }
-
+        [HttpPost("AddAlbum")]
+        public IActionResult PostAlbum(Album album)
+        {
+            var tupledResult = _recordShopService.ConfirmAdditionOfAlbum(album);
+            switch (tupledResult.Item1)
+            {
+                case (HttpStatusCode.Accepted):
+                    return Accepted((Album)tupledResult.Item2);
+                case (HttpStatusCode.BadRequest):
+                    return BadRequest((string)tupledResult.Item2);
+                default: return NotFound();
+            }
+        }
 
     }
 }

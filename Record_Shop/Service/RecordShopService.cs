@@ -7,6 +7,8 @@ namespace Record_Shop.Service
     public interface IRecordShopService 
     {
         public (HttpStatusCode, List<Album>) ConfirmAlbums();
+        public (HttpStatusCode, Album?) ConfirmIndividualAlbumById(string id);
+        public (HttpStatusCode, object) ConfirmAdditionOfAlbum(Album album);
     }
     public class RecordShopService : IRecordShopService
     {
@@ -24,6 +26,58 @@ namespace Record_Shop.Service
                 return (HttpStatusCode.NoContent, albums);
             }
             return (HttpStatusCode.OK, albums);
+        }
+
+        public (HttpStatusCode, Album?) ConfirmIndividualAlbumById(string id)
+        {
+            if(!int.TryParse(id, out var albumId))
+            {
+                return (HttpStatusCode.BadRequest, null);
+            } 
+
+            var album = _recordShopModel.RetrieveAlbum(albumId);
+            if (album != null)
+            {
+                return (HttpStatusCode.OK, album);
+            }
+            else
+            {
+                return (HttpStatusCode.NoContent, album);
+            }
+            
+        }
+        public (HttpStatusCode, object) ConfirmAdditionOfAlbum(Album album)
+        {
+            album.Id = 0;
+            if (album.Artist == null)
+            {
+                return (HttpStatusCode.BadRequest,  $"Request Denied, because you provided no artist");
+            }
+            if (album.Title == null)
+            {
+                return (HttpStatusCode.BadRequest,  $"Request Denied, because you provided no title");
+            }
+            if (album.Songs == null || album.Songs.Count == 0)
+            {
+                return (HttpStatusCode.BadRequest,  "Request Denied, because you provided no songs");
+            }
+            for (int i = 0; i<album.Songs.Count; i++ )
+            {
+                album.Songs[i].id = 0;
+                if (album.Songs[i].title == null)
+                {
+                    return (HttpStatusCode.BadRequest, $"Request Denied, because the song provided at position {i} has no title. Please ensure all songs are given proper titles.");
+                }
+                if (album.Songs[i].length == 0)
+                {
+                    return (HttpStatusCode.BadRequest,  $"Request Denied, because the song provided at position {i} has no length. Please ensure all songs have song lengths provided.");
+                }
+        
+            }
+
+            _recordShopModel.AddAlbum(album);
+            return (HttpStatusCode.Accepted, album);
+            
         }
     }
 }

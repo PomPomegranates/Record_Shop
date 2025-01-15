@@ -1,24 +1,24 @@
   [
     {
-      "title": "Alligator Bites Never Heal",
-      "artist": "Doechii",
-      "year_released": 2024,
+      "title": "The Test",
+      "artist": "TEST",
+      "year_released": 1970,
       "songs": [
         {
-          "title": "Denial Is A River",
-          "length": 160
+          "title": "Testing 1",
+          "length": 200
         },
         {
-          "title": "True Feeling",
-          "length": 214
+          "title": "Testing 2",
+          "length": 201
         },
         {
-          "title": "Written in the scars",
-          "length": 194
+          "title": "Testing 3",
+          "length": 202
         },
         {
-          "title": "No Money",
-          "length": 185
+          "title": "Testing 4",
+          "length": 203
         }
       ]
     },
@@ -42,17 +42,6 @@
         {
           "title": "How Else",
           "length": 152
-        }
-      ]
-    },
-    {
-      
-      "title": "SOS",
-      "artist": "SZA",
-      "songs": [
-        {
-          "title": "BMF",
-          "length": 180
         }
       ]
     }
