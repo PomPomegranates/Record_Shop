@@ -40,8 +40,8 @@ namespace Record_Shop.Controllers
                     return Ok(tupledResult.Item2);
                 case (HttpStatusCode.NoContent):
                     return NoContent();
-                case (HttpStatusCode.BadRequest):
-                    return BadRequest();
+                case (HttpStatusCode.UnprocessableEntity):
+                    return UnprocessableEntity(id);
                 default:
                     return NotFound();
             }
@@ -54,9 +54,27 @@ namespace Record_Shop.Controllers
             {
                 case (HttpStatusCode.Accepted):
                     return Accepted((Album)tupledResult.Item2);
-                case (HttpStatusCode.BadRequest):
-                    return BadRequest((string)tupledResult.Item2);
+                case (HttpStatusCode.UnprocessableEntity)    :
+                    return UnprocessableEntity((string)tupledResult.Item2);
                 default: return NotFound();
+            }
+        }
+
+        [HttpPut("ModifyAlbum/{id}")]
+        public IActionResult PutAlbum(string id, Album album)
+        {
+            var tupledResult = _recordShopService.ConfirmUpdateAlbum(id, album);
+            switch (tupledResult.Item1)
+            {
+                case (HttpStatusCode.Accepted):
+                    return Accepted((Album)tupledResult.Item2);
+                
+                case (HttpStatusCode.NotFound):
+                {
+                    return NotFound((string)tupledResult.Item2);
+                }
+                    default: return BadRequest();
+                
             }
         }
 

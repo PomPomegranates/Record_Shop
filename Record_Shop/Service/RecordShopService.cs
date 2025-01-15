@@ -9,6 +9,7 @@ namespace Record_Shop.Service
         public (HttpStatusCode, List<Album>) ConfirmAlbums();
         public (HttpStatusCode, Album?) ConfirmIndividualAlbumById(string id);
         public (HttpStatusCode, object) ConfirmAdditionOfAlbum(Album album);
+        public (HttpStatusCode, object) ConfirmUpdateAlbum(string id, Album album);
     }
     public class RecordShopService : IRecordShopService
     {
@@ -32,7 +33,7 @@ namespace Record_Shop.Service
         {
             if(!int.TryParse(id, out var albumId))
             {
-                return (HttpStatusCode.BadRequest, null);
+                return (HttpStatusCode.UnprocessableEntity, null);
             } 
 
             var album = _recordShopModel.RetrieveAlbum(albumId);
@@ -48,29 +49,29 @@ namespace Record_Shop.Service
         }
         public (HttpStatusCode, object) ConfirmAdditionOfAlbum(Album album)
         {
-            album.Id = 0;
+
             if (album.Artist == null)
             {
-                return (HttpStatusCode.BadRequest,  $"Request Denied, because you provided no artist");
+                return (HttpStatusCode.UnprocessableEntity,  $"Request Denied, because you provided no artist");
             }
             if (album.Title == null)
             {
-                return (HttpStatusCode.BadRequest,  $"Request Denied, because you provided no title");
+                return (HttpStatusCode.UnprocessableEntity, $"Request Denied, because you provided no title");
             }
             if (album.Songs == null || album.Songs.Count == 0)
             {
-                return (HttpStatusCode.BadRequest,  "Request Denied, because you provided no songs");
+                return (HttpStatusCode.UnprocessableEntity, "Request Denied, because you provided no songs");
             }
             for (int i = 0; i<album.Songs.Count; i++ )
             {
                 album.Songs[i].id = 0;
                 if (album.Songs[i].title == null)
                 {
-                    return (HttpStatusCode.BadRequest, $"Request Denied, because the song provided at position {i} has no title. Please ensure all songs are given proper titles.");
+                    return (HttpStatusCode.UnprocessableEntity, $"Request Denied, because the song provided at position {i} has no title. Please ensure all songs are given proper titles.");
                 }
                 if (album.Songs[i].length == 0)
                 {
-                    return (HttpStatusCode.BadRequest,  $"Request Denied, because the song provided at position {i} has no length. Please ensure all songs have song lengths provided.");
+                    return (HttpStatusCode.UnprocessableEntity,  $"Request Denied, because the song provided at position {i} has no length. Please ensure all songs have song lengths provided.");
                 }
         
             }
@@ -78,6 +79,14 @@ namespace Record_Shop.Service
             _recordShopModel.AddAlbum(album);
             return (HttpStatusCode.Accepted, album);
             
+        }
+        public (HttpStatusCode, object) ConfirmUpdateAlbum(string id, Album album)
+        {
+            if (ConfirmIndividualAlbumById(id).Item2 == null) return (HttpStatusCode.NotFound, $"No Item exists for Album ID:{id}");
+            else return (HttpStatusCode.Accepted, _recordShopModel.ModifyAlbum(int.Parse(id), album));
+            
+
+
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Record_Shop.Model
         public List<Album> RetrieveAlbums();
         public Album? RetrieveAlbum(int id);
         public void AddAlbum(Album album);
+        public Album ModifyAlbum(int id, Album album);
     }
     public class RecordShopModel : IRecordShopModel
     {
@@ -73,6 +74,39 @@ namespace Record_Shop.Model
             CheckDatabase();
             db.Albums.Add(album);
             db.SaveChanges();
+        }
+
+        public Album ModifyAlbum(int id, Album album)
+        {
+            CheckDatabase();
+            var changeableAlbum = RetrieveAlbum(id)!;
+            
+           
+                if (!album.Title.IsNullOrEmpty())
+                {
+                    changeableAlbum.Title = album.Title;
+                }
+                if (!album.Artist.IsNullOrEmpty())
+                {
+                    changeableAlbum.Artist = album.Artist;
+                }
+                if (!album.Songs.IsNullOrEmpty())
+                {
+                foreach (Song song in album.Songs)
+                {
+                    if (!album.Songs.Contains(song))
+                    {
+                        changeableAlbum.Songs.Add(song);
+                    }
+                    
+                }
+                }
+
+                db.SaveChanges();
+            
+            return RetrieveAlbum(album.Id)!;
+            
+            
         }
 
         
