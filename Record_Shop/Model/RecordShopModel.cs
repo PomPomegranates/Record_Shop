@@ -31,16 +31,16 @@ namespace Record_Shop.Model
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true,
-                    ReferenceHandler = ReferenceHandler.IgnoreCycles,
-                    WriteIndented = true
+                    //ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                    //WriteIndented = true
                 };
                 var list = JsonSerializer.Deserialize<List<Album>>(File.ReadAllText("Albums.json"), options)!;
                 db.Albums.UpdateRange(list);
                 foreach (Album album in db.Albums)
                 {
-                    db.Artists.AddRange(album.Artist);
-                    db.Songs.AddRange(album.Songs);
-                    db.SaveChanges();
+                    //db.Artists.UpdateRange(album.Artist);
+                    //db.Songs.UpdateRange(album.Songs);
+                    //db.SaveChanges();
                 }
                 db.SaveChanges();
                 //try
@@ -60,6 +60,8 @@ namespace Record_Shop.Model
         {
             if (!DbCreated) CheckDatabase();
             var list = db.Albums.ToList();
+            var songList = db.Artists.ToList();
+            var artistList = db.Songs.ToList();
             return list;
             
         } 

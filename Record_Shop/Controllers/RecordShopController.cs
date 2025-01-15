@@ -22,7 +22,7 @@ namespace Record_Shop.Controllers
             switch (tupledResult.Item1)
             {
                 case (HttpStatusCode.OK):
-                    return Ok(_recordShopService.ConfirmAlbums().Item2);
+                    return Ok(tupledResult.Item2);
                 case (HttpStatusCode.NoContent):
                     return NoContent();
                 default:
