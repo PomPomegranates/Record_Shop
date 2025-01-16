@@ -15,12 +15,12 @@ namespace Record_Shop
             Console.WriteLine(builder.Environment.IsDevelopment());
             if (builder.Environment.IsDevelopment())
             {
-                //builder.Services.AddDbContext<RecordShopDbContext>(options => options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Record_Shop;User Id=sa;Password=password;Trust Server Certificate=True"));
+                
                 builder.Services.AddDbContext<RecordShopDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
             }
-            else if (builder.Environment.IsProduction())
+            else 
             {
-                builder.Services.AddDbContext<RecordShopDbContext>(options => options.UseSqlServer("Default_Connection:Connection_String"));
+                builder.Services.AddDbContext<RecordShopDbContext>(options => options.UseSqlServer("Connection_String"));
             }
             //builder.Services.AddDbContext<RecordShopDbContext>();
             builder.Services.AddScoped<IRecordShopService, RecordShopService>();
