@@ -1,0 +1,27 @@
+﻿@inherits ComponentBase
+@using Models
+
+<h3>AlbumsLoader</h3>
+
+@if(Albums != null)
+{
+    @foreach(Album album in Albums){
+        <AlbumDisplay album="album"/>
+    }
+}
+
+else
+
+{
+    <div>TODO: Put an actual loading indicator here...</div>
+}
+
+@code {
+    public List<Album> Albums { get; set; } = new List<Album>();
+    private string? message;
+    protected override async Task OnInitializedAsync()
+    {
+        var http = new HttpClient();
+        Albums = await http.GetFromJsonAsync<List<Album>>("https://localhost:7110/RecordShop");
+    }
+}

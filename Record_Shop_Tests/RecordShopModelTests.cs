@@ -36,7 +36,7 @@ namespace Record_Shop_Tests
         public void TestIdIsFinding()
         {
             var test_album = recordShopModel.RetrieveAlbum(1);
-            test_album.Artist.Name.Should().Be("TEST");
+            test_album.Artist.Should().Be("TEST");
 
         }
 

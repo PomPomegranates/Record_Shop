@@ -64,12 +64,11 @@ namespace Record_Shop.Service
             }
             for (int i = 0; i<album.Songs.Count; i++ )
             {
-                album.Songs[i].id = 0;
-                if (album.Songs[i].title == null)
+                if (album.Songs[i] == null)
                 {
                     return (HttpStatusCode.UnprocessableEntity, $"Request Denied, because the song provided at position {i} has no title. Please ensure all songs are given proper titles.");
                 }
-                if (album.Songs[i].length == 0)
+                if (album.Songs[i].Count() == 0)
                 {
                     return (HttpStatusCode.UnprocessableEntity,  $"Request Denied, because the song provided at position {i} has no length. Please ensure all songs have song lengths provided.");
                 }

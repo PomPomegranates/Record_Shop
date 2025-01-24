@@ -6,8 +6,8 @@ namespace Record_Shop
     {
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
-        //    optionsBuilder.UseInMemoryDatabase(databaseName: "RecordShopMemory");
-        //    //optionsBuilder.UseSqlServer()
+        //    //optionsBuilder.UseInMemoryDatabase(databaseName: "RecordShopMemory");
+        //    //optionsBuilder.UseSqlServer();
         //}
         //public RecordShopDbContext()
         //{
@@ -17,9 +17,9 @@ namespace Record_Shop
        : base(options) { }
 
 
-        public DbSet<Artist> Artists { get; set; }
+        //public DbSet<Artist> Artists { get; set; }
         public DbSet<Album> Albums { get; set; }
-        public DbSet<Song> Songs { get; set; }
+        //public DbSet<Song> Songs { get; set; }
 
     }
 }

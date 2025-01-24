@@ -1,71 +1,28 @@
   [
     {
       "title": "Alligator Bites Never Heal",
-      "artist": 
-        { "name": "Doechii" }
+      "artist": "Doechii" 
       ,
-        "year_released"
-        :
-        2024,
+        "year_released":2024,
         "songs"
         :
         [
-          {
-            "title": "Denial Is A River",
-            "length": 160
-          },
-          {
-            "title": "True Feeling",
-            "length": 214
-          },
-          {
-            "title": "Written in the scars",
-            "length": 194
-          },
-          {
-            "title": "No Money",
-            "length": 185
-          }
+          "Denial Is A River",
+            "Nissan Ultima",
+             "GTFO"
         ]
-    },
-    {
-      "title": "Kolony",
-      "artist": 
-        { "name": "Steve Aoki" }
-      ,
-      "year_released": 2017,
-      "songs": [
-        {
-          "title": "Lit",
-          "length": 150
-        },
-        {
-          "title": "Without you",
-          "length": 207
-        },
-        {
-          "title": "Been Ballin",
-          "length": 180
-        },
-        {
-          "title": "How Else",
-          "length": 152
-        }
-      ]
     },
     {
 
       "title": "SOS",
-      "artist": 
-        { "name": "SZA" }
-      ,
+      "artist": "SZA",
+      "year_released": 2024,
       "songs": [
-        {
-          "title": "BMF",
-          "length": 180
-        }
+        "BMF",
+        "SOS"
       ]
     }
+    
   ]
 
 

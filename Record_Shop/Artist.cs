@@ -1,11 +1,12 @@
 ﻿namespace Record_Shop
 {
-    public class Artist
+    public class INVALID
     {
-        public int Id { get; set; }
+        public int ArtistId { get; set; }
         public string Name { get; set; }
-        public List<Song> Songs { get; set; }   
-        public List<Album> Albums { get; set; }
+
+        public List<int> SongIds { get; set; }
+        public List<string> Songs { get; set; }   
 
     }
 }

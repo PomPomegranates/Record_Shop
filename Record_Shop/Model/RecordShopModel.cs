@@ -22,8 +22,8 @@ namespace Record_Shop.Model
         private void CheckDatabase()
         {
 
-            
-            
+
+
             if (db.Albums == null || db.Albums.ToList().Count == 0)
 
             {
@@ -45,23 +45,25 @@ namespace Record_Shop.Model
                 db.SaveChanges();
                 //try
                 //{
-                    
+
                 //} catch (FileNotFoundException ex)
                 //{
                 //    return;
                 //}
                 DbCreated = true;
             }
-                
-            
+
+
         }
 
         public List<Album> RetrieveAlbums()
         {
-            if (!DbCreated) CheckDatabase();
+            if (!DbCreated)
+            {
+                CheckDatabase();
+            }
             var list = db.Albums.ToList();
-            var songList = db.Artists.ToList();
-            var artistList = db.Songs.ToList();
+
             return list;
             
         } 
@@ -85,14 +87,14 @@ namespace Record_Shop.Model
 
         public void AddAlbum(Album album)
         {
-            if (!DbCreated) CheckDatabase();
+            
             db.Albums.Add(album);
             db.SaveChanges();
         }
 
         public Album ModifyAlbum(int id, Album album)
         {
-            if (!DbCreated) CheckDatabase();
+           
             var changeableAlbum = RetrieveAlbum(id)!;
             
            
@@ -100,21 +102,21 @@ namespace Record_Shop.Model
                 {
                     changeableAlbum.Title = album.Title;
                 }
-                if (!album.Artist.Name.IsNullOrEmpty())
+                if (!album.Artist.IsNullOrEmpty())
                 {
                     changeableAlbum.Artist = album.Artist;
                 }
                 if (!album.Songs.IsNullOrEmpty())
                 {
-                foreach (Song song in album.Songs)
+                foreach (string song in album.Songs)
                 {
                     if (!album.Songs.Contains(song))
                     {
                         changeableAlbum.Songs.Add(song);
                     }
-                    
+
                 }
-                }
+            }
 
                 db.SaveChanges();
             

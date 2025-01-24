@@ -1,0 +1,17 @@
+﻿@using Models
+
+<div>
+    <ul>
+        <li>@album.Title</li>
+        <li>@album.Artist</li>
+        <li>@album.Year_released</li>
+        @foreach(string song in album.Songs){
+            <li>@song</li>
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter]
+    public Album album { get; set; } = new Album();
+}

@@ -13,14 +13,21 @@ namespace Record_Shop
         {
             var builder = WebApplication.CreateBuilder(args);
             Console.WriteLine(builder.Environment.IsDevelopment());
+
+            
+
+
             if (builder.Environment.IsDevelopment())
             {
-                
-                builder.Services.AddDbContext<RecordShopDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
+                // Get the connection string from appsettings.json
+                string connectionString = builder.Configuration.GetConnectionString("DevelopmentConnection");
+                builder.Services.AddDbContext<RecordShopDbContext>(options => options.UseSqlServer(connectionString));
             }
             else 
             {
-                builder.Services.AddDbContext<RecordShopDbContext>(options => options.UseSqlServer("Connection_String"));
+                // Get the connection string from appsettings.json
+                string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+                builder.Services.AddDbContext<RecordShopDbContext>(options => options.UseSqlServer(connectionString));
             }
             //builder.Services.AddDbContext<RecordShopDbContext>();
             builder.Services.AddScoped<IRecordShopService, RecordShopService>();
