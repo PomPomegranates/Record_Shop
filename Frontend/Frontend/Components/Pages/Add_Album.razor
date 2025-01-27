@@ -4,15 +4,15 @@
 
 <h3>Add Your Own Album</h3>
 @if(isReady){
-    <EditForm Model="_model" OnSubmit="Confirm" FormName="Album">
+    <EditForm FormName="Album"  Model="_model" OnSubmit="Confirm">
         <div>
             Title
-            <InputText @bind-Value="_model.Title" />
+            <InputText id="title" @bind-Value="_model.Title" />
             Artist
-            <InputText @bind-Value="_model.Artist" />
+            <InputText id="artist" @bind-Value="_model.Artist" />
             Year_Released
-            <InputText @bind-Value="_model.Year_released" />
-            <button>
+            <InputText id="releaseYear" @bind-Value="_model.Year_released" />
+            <button type="submit">
                 Submit Changes and Add Songs
             </button>
         </div>
