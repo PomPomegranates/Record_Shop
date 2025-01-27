@@ -3,8 +3,8 @@
 @using Models
 
 <h3>Add Your Own Album</h3>
-@if(isReady){
-    <EditForm FormName="Album"  Model="_model" OnSubmit="Confirm">
+@if(!isReady){
+    <EditForm FormName="UserAlbum"  Model="@_model" OnSubmit="Confirm">
         <div>
             Title
             <InputText id="title" @bind-Value="_model.Title" />
@@ -19,36 +19,44 @@
     </EditForm>
 }
 else{
-    <button @onclick="()=>">
+    <button @onclick="()=>FlipIsReady()">
         Go Back to Album
     </button>
-        <div>
-            SongTitle
-            <InputText @bind-Value="song"/>
+    <EditForm FormName="Song" Model ="@_song" OnSubmit="Add_Song">
+    <div>
+        SongTitle
+        <InputText id="songTitle" @bind-value="_song.song"/>
 
-            <button>
-                Submit Changes and Add Song
-            </button>
-        </div>
+        <button type="submit">
+            Submit Changes and Add Song
+        </button>
+    </div>
+    </EditForm>
     @if(_model.Songs !=null){
-        <button @onclick="()=>Remove_Last_Song()">
+        <button type="submit" @onclick="()=>Remove_Last_Song()">
             Remove Previous Song
         </button>
     }
     @if (_model.Songs != null)
     {
-        <button @onclick="()=>SubmitAlbum()">
+        <button type="submit" @onclick="()=>SubmitAlbum()">
             Submit Entire Album
         </button>
     }
 
 }
 
+<div>
+    <AlbumDisplay album="_album" />
+</div>
+
 @code {
     [SupplyParameterFromForm]
-    private UserAlbum? _model { get; set; }
-    private string song { get; set; }
+    private UserAlbum? _model { get; set; } = new UserAlbum();
+    [SupplyParameterFromForm]
+    private Song _song { get; set; } = new Song();
     private bool isReady { get; set; }
+        private bool isComplete { get; set; }
     private Album _album { get; set; } = new Album();
 
     public class UserAlbum
@@ -65,14 +73,19 @@ else{
 
     }
 
+        public class Song
+        {
+        public  string song { get; set; }
+        }
+
     protected override void OnInitialized()
     {
         _model ??= new();
     }
 
-    private async Task FlipIsReady()
+    private void FlipIsReady()
     {
-
+         isReady = !isReady;
     }
 
 
@@ -86,14 +99,15 @@ else{
             _album.Year_released = result;
             await Task.Run(() => isReady = true);
             Console.WriteLine("Hit the Confirmation");
-            
+
         }
 
     }
     private async Task Add_Song()
     {
-        if (song == "") return;
-        await Task.Run(()=>_model!.Songs.Push(song));
+        if (_song.song == "") return;
+        Console.WriteLine($"{_song.song}");
+        await Task.Run(() => _model!.Songs.Push(_song.song));
 
     }
     private async Task Remove_Last_Song()
@@ -105,8 +119,10 @@ else{
     private async Task SubmitAlbum()
     {
         if (_model!.Songs.Count !=0){
+            
             _album.Songs = _model.Songs.ToList();
         }
+        isComplete = true;
         await Task.Run(()=>Console.WriteLine(_album.ToString()));
 
     } 
