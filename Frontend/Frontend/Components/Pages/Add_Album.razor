@@ -4,7 +4,7 @@
 
 <h3>Add Your Own Album</h3>
 @if(!isReady){
-    <EditForm FormName="UserAlbum"  Model="@_model" OnSubmit="Confirm">
+    <EditForm FormName="UserAlbum"  Model="_model" OnSubmit="Confirm">
         <div>
             Title
             <InputText id="title" @bind-Value="_model.Title" />
@@ -22,15 +22,15 @@ else{
     <button @onclick="()=>FlipIsReady()">
         Go Back to Album
     </button>
-    <EditForm FormName="Song" Model ="@_song" OnSubmit="Add_Song">
-    <div>
-        SongTitle
-        <InputText id="songTitle" @bind-value="_song.song"/>
+    <EditForm FormName="Song" Model ="_song" OnSubmit="Add_Song">
+        <div>
+            SongTitle
+            <InputText id="songTitle" @bind-value="_song.song"/>
 
-        <button type="submit">
-            Submit Changes and Add Song
-        </button>
-    </div>
+            <button type="submit">
+                Submit Changes and Add Song
+            </button>
+        </div>
     </EditForm>
     @if(_model.Songs !=null){
         <button type="submit" @onclick="()=>Remove_Last_Song()">
@@ -51,12 +51,16 @@ else{
 </div>
 
 @code {
-    [SupplyParameterFromForm]
-    private UserAlbum? _model { get; set; } = new UserAlbum();
-    [SupplyParameterFromForm]
-    private Song _song { get; set; } = new Song();
+    [SupplyParameterFromForm(FormName ="UserAlbum")]
+    public UserAlbum? _model { get; set; } = new UserAlbum();
+
+
+    [SupplyParameterFromForm(FormName ="Sing")]
+    public Song _song { get; set; } = new Song();
+
+
     private bool isReady { get; set; }
-        private bool isComplete { get; set; }
+    private bool isComplete { get; set; }
     private Album _album { get; set; } = new Album();
 
     public class UserAlbum
@@ -73,14 +77,17 @@ else{
 
     }
 
-        public class Song
-        {
+    public class Song
+    {
         public  string song { get; set; }
-        }
+    }
 
     protected override void OnInitialized()
     {
         _model ??= new();
+        _song ??= new();
+        _album ??= new();
+        
     }
 
     private void FlipIsReady()
